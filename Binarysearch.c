@@ -18,16 +18,6 @@ int main()
 		count++;
 	}
 	space+=4;
-	printf("The sorted array is:\n");
-	count++;
-	for(int i=0; i<size; ++i)
-	{
-		count++;
-		printf("%d ",arr[i]);
-		count++;
-	}
-	printf("\n");
-	count++;
 	printf("Enter the element to be searched: ");
 	count++;
 	int search;
