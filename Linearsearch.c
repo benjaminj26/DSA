@@ -2,12 +2,13 @@
 
 int main()
 {
-	int size,count=0;
+	int size, count=0, space;
 	printf("Input the number of elements: ");\
 	count++;
 	scanf("%d",&size);
 	count++;
 	int arr[size];
+	space+=size*4;
 	printf("Input %d elements:\n",size);
 	count++;
 	for(int i=0; i<size; ++i)
@@ -17,6 +18,7 @@ int main()
 		count++;
 	}
 	int num,flag=0;
+	space+=12;
 	count++;
 	printf("Input the number to be searched: ");
 	count++;
@@ -41,6 +43,7 @@ int main()
 		printf("Element not found!!\n");
 		count++;
 	}
-	printf("\nThe time complexity is %d\n",count);
+	printf("\nThe time complexity is %d\n", count);
+	printf("\nThe space complexity is %d\n", space);
 	return 0;
 }

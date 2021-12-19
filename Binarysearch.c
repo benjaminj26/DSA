@@ -2,13 +2,14 @@
 
 int main()
 {
-	int size, count=0;
-	printf("Input the number of elements: ");
+	int size, count=0, space=4;
+	printf("Enter the number of elements: ");
 	count++;
 	scanf("%d",&size);
 	count++;
 	int arr[size];
-	printf("Input %d elements:\n",size);
+	space+=size*4;
+	printf("Enter %d elements:\n",size);
 	count++;
 	for(int i=0; i<size; ++i)
 	{
@@ -16,6 +17,7 @@ int main()
 		scanf("%d",&arr[i]);
 		count++;
 	}
+	space+=4;
 	printf("The sorted array is:\n");
 	count++;
 	for(int i=0; i<size; ++i)
@@ -26,14 +28,17 @@ int main()
 	}
 	printf("\n");
 	count++;
-	printf("Input the element to be searched: ");
+	printf("Enter the element to be searched: ");
 	count++;
 	int search;
+	space+=4;
 	scanf("%d",&search);
 	count++;
 	int mid=size/2;
+	space+=4;
 	count++;
 	int flag = 0;
+	space+=4;
 	count++;
 	while(mid>=0 && mid<size)
 	{
@@ -60,6 +65,7 @@ int main()
 			count++;
 		}
 	}
-	printf("The time complexity is: %d\n", count);
+	printf("\nThe time complexity is: %d\n", count);
+	printf("\nThe space complexity is: %d\n", space);
 	return 0;
 }

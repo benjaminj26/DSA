@@ -4,13 +4,13 @@ int main()
 {
 	int size,count=0;
 	int space = 4;
-	printf("Input the number of elements: ");
+	printf("Enter the number of elements: ");
 	count++;
 	scanf("%d",&size);
 	count++;
 	int arr[size];
 	space += size*4;
-	printf("Input %d elements:\n",size);
+	printf("Enter %d elements:\n",size);
 	count++;
 	for(int i=0; i<size; ++i)
 	{
