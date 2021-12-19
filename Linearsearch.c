@@ -2,7 +2,7 @@
 
 int main()
 {
-	int size, count=0, space;
+	int size, count=0, space=4;
 	printf("Input the number of elements: ");\
 	count++;
 	scanf("%d",&size);
