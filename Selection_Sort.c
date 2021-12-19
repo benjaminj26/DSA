@@ -2,12 +2,13 @@
 
 int main()
 {
-	int size, min_index, count=0;
+	int size, min_index, count=0, space=8;
 	printf("Input the number of elements: ");
 	count++;
 	scanf("%d",&size);
 	count++;
 	int arr[size];
+	space+=size*4;
 	printf("Input %d elements:\n",size);
 	count++;
 	for(int i=0; i<size; ++i)
@@ -16,6 +17,7 @@ int main()
 		scanf("%d",&arr[i]);
 		count++;
 	}
+	space+=4;
 	count++;
 	for(int i=0; i<size-1; ++i)
 	{
@@ -26,11 +28,11 @@ int main()
 		{
 			count++;
 			if(arr[j]<arr[min_index])
-			{	
+			{
 				count++;
 				min_index=j;
 				count++;
-			}	
+			}
 		}
 		count++;
 		int tmp = arr[min_index];
@@ -40,6 +42,7 @@ int main()
 		arr[i] = tmp;
 		count++;
 	}
+	space+=8;
 	count++;
 	printf("\nThe sorted array is:\n");
 	count++;
@@ -50,5 +53,6 @@ int main()
 		count++;
 	}
 	printf("\nThe Time Complexity is %d\n",count);
+	printf("\nThe space Complexity is %d\n", space);
 	return 0;
 }
