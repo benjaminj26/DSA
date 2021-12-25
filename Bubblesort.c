@@ -3,14 +3,14 @@
 int main()
 {
 	int size,count=0;
-	int space = 4;
-	printf("Enter the number of elements: ");
+	int space = 8;
+	printf("Input the number of elements: ");
 	count++;
 	scanf("%d",&size);
 	count++;
 	int arr[size];
 	space += size*4;
-	printf("Enter %d elements:\n",size);
+	printf("Input %d elements:\n",size);\
 	count++;
 	for(int i=0; i<size; ++i)
 	{
@@ -39,7 +39,6 @@ int main()
 		count++;
 	}
 	count++;
-	space += 12;
 	printf("The sorted array is:\n");
 	count++;
 	for(int i=0; i<size; ++i)
@@ -49,7 +48,6 @@ int main()
 		count++;
 	}
 	count++;
-	printf("\nThe Time Complexity is %d\n", count);
-	printf("\nThe space Complexity is %d\n", space);
+	printf("\nThe Time Complexity is %d\n",count);
 	return 0;
 }
