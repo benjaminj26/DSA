@@ -1,4 +1,10 @@
-#include<stdio.h>
+/* 
+	C program to implement Queue data structure
+	Author : Benjamin Joseph
+	Date : 18-12-2021
+*/
+
+#include <stdio.h>
 #include <stdlib.h>
 
 void display(int queue[], int rear, int front)
