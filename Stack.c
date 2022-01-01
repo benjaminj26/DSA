@@ -1,3 +1,9 @@
+/*
+	C program to implement Stack data structure
+	Author : Benjamin Joseph
+	Date : 14-12-2021
+*/
+
 #include<stdio.h>
 
 void display(int *arr,int top)
@@ -30,7 +36,7 @@ void pop(int size, int *arr, int *top)
 		printf("The stack after deletion is:\n");
 		display(arr,*top);
 	}
-	
+
 }
 
 void peek(int *arr, int *top)

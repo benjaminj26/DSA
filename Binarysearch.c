@@ -1,3 +1,9 @@
+/*
+	Program to implement Binary Search algorithm in C
+	Author : Benjamin Joseph
+	Date : 8-12-2021
+*/
+
 #include<stdio.h>
 
 int main()

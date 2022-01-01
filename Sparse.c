@@ -1,3 +1,9 @@
+/*
+	Program to implement sparse matrix in C
+	Author : Benjamin Joseph
+	Date : 12-12-2021
+*/
+
 #include<stdio.h>
 
 int main()

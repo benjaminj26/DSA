@@ -1,3 +1,9 @@
+/*
+	Program to represent a polynomial in C
+	Author : Benjamin Joseph
+	Date : 13-12-2021
+*/
+
 #include<stdio.h>
 
 int main()
@@ -20,5 +26,5 @@ int main()
 			printf("%dx^%d",polynomial[i],i);
 	}
 	printf("\n");
-	return 0;	
+	return 0;
 }

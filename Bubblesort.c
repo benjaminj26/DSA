@@ -1,3 +1,9 @@
+/*
+	Program to implement Bubble Sort algorithm in C
+	Author : Benjamin Joseph
+	Date : 9-12-2021
+*/
+
 #include<stdio.h>
 
 int main()

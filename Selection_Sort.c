@@ -1,3 +1,9 @@
+/*
+	Program to implement Selection Sort algorithm in C
+	Author : Benjamin Joseph
+	Date : 2-12-2021
+*/
+
 #include<stdio.h>
 
 int main()

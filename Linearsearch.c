@@ -1,3 +1,9 @@
+/*
+	Program to implement Linear Search algorithm in C
+	Author : Benjamin Joseph
+	Date : 10-12-2021
+*/
+
 #include<stdio.h>
 
 int main()
