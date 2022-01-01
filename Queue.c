@@ -12,9 +12,9 @@ void display(int queue[], int rear, int front)
 
 void enqueue(int size,int queue[],int *rear, int *front)
 {
-	if(rear == size-1)
+	if(*rear == size-1)
 		printf("\nQueue is full\n");
-	else if(*rear == *front == -1)
+	else if(*rear == -1 && *front == -1)
 	{
 		*front = 0;
 		printf("Input the number: ");
