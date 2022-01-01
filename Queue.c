@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <stdlib.h>
 
 void display(int queue[], int rear, int front)
 {
@@ -27,7 +28,7 @@ void dequeue(int size,int queue[],int *rear, int *front)
 	{
 		printf("\nQueue is empty\n");
 	}
-	else if(*front =-1) 
+	else if(*front == -1) 
 	{
 		printf("Queue is empty\n");
 	}
@@ -49,13 +50,17 @@ int main()
 		scanf("%d", &opt);
 		switch(opt)
 		{
-			case 1: enqueue(size, queue, &rear, &front);
-			break;
-			case 2: dequeue(size, queue, &rear, &front);
-			break;
-			case 3: display(queue,rear,front);
-			break;
-			case 4: return 0;
+			case 1: 
+				enqueue(size, queue, &rear, &front);
+				break;
+			case 2: 
+				dequeue(size, queue, &rear, &front);
+				break;
+			case 3: 
+				display(queue,rear,front);
+				break;
+			case 4: 
+				exit(0);
 			default : printf("Invalid Input\n");
 		}
 	}while(1);
