@@ -58,7 +58,7 @@ int main()
 		printf("%d ",arr[i]);
 		count++;
 	}
-	printf("\nThe Time Complexity is %d\n",count);
-	printf("\nThe space Complexity is %d\n", space);
+	printf("\n\nThe Time Complexity is %d\n",count);
+	printf("The space Complexity is %d\n", space);
 	return 0;
 }

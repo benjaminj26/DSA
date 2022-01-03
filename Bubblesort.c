@@ -1,22 +1,16 @@
-/*
-	Program to implement Bubble Sort algorithm in C
-	Author : Benjamin Joseph
-	Date : 9-12-2021
-*/
-
 #include<stdio.h>
 
 int main()
 {
 	int size,count=0;
 	int space = 8;
-	printf("Input the number of elements: ");
+	printf("Enter the number of elements: ");
 	count++;
 	scanf("%d",&size);
 	count++;
 	int arr[size];
 	space += size*4;
-	printf("Input %d elements:\n",size);\
+	printf("Enter %d elements:\n",size);\
 	count++;
 	for(int i=0; i<size; ++i)
 	{
@@ -55,5 +49,6 @@ int main()
 	}
 	count++;
 	printf("\nThe Time Complexity is %d\n",count);
+	printf("The space Complexity is %d\n",space);
 	return 0;
 }
