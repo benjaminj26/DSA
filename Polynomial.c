@@ -14,7 +14,7 @@ int main()
 	int polynomial[deg+1];
 	for(int i=deg; i>=0; --i)
 	{
-		printf("Input the power of x^%d: ",i);
+		printf("Input the coefficient of x^%d: ",i);
 		scanf("%d",&polynomial[i]);
 	}
 	printf("The polynomial you entered is:\n");
