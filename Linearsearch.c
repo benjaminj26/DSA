@@ -50,6 +50,6 @@ int main()
 		count++;
 	}
 	printf("\nThe time complexity is %d\n", count);
-	printf("\nThe space complexity is %d\n", space);
+	printf("The space complexity is %d\n", space);
 	return 0;
 }
