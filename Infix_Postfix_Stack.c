@@ -34,13 +34,13 @@ int pop(char *stack, int top)
 {
 	if(top == 0)
 	{
-		printf("%c ", stack[top]);
+		printf("%c", stack[top]);
 		top = -1;
 		return top;
 	}
 	else 
 	{
-		printf("%c ",stack[top]);
+		printf("%c",stack[top]);
 		top--;
 		return top;
 	}
@@ -77,7 +77,7 @@ int main()
 		{
 			if(prty > priority(stack[top]) || stack[top] == '\0')
 				top = push(ch,stack,top);
-			else if(prty < priority(stack[top]))
+			else if(prty <= priority(stack[top]))
 			{
 				if(ch == ')')
 				{
@@ -88,23 +88,19 @@ int main()
 				}
 				else
 				{
-					top = pop(stack,top);
+					while(prty <= priority(stack[top]))
+					{
+						top = pop(stack,top);
+					}
 					top = push(ch,stack,top);
 				}
 			}
-			// else if(ch == ')')
-			// {
-			// 	while(stack[top] != '(')
-			// 	{
-			// 		top = pop(stack,top);
-			// 	}
-			// }
 		}
 		else if(isalnum(ch))
 		{
 			printf("%c",ch);
 		}
-		else if(i == size-1)
+		if(i == strlen(expression)-1)
 		{
 			while(top >= 0)
 			{
