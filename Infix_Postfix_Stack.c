@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<ctype.h>
 
 int priority(char ch)
 {
@@ -98,7 +97,7 @@ int main()
 				}
 			}
 		}
-		else if(isalnum(ch))
+		else if(prty == -1)
 		{
 			printf("%c",ch);
 		}
