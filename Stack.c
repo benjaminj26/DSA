@@ -57,16 +57,22 @@ int main()
 		scanf("%d", &opt);
 		switch(opt)
 		{
-			case 1: push(size,arr,&top);
-			break;
-			case 2: pop(size,arr,&top);
-			break;
-			case 3: peek(arr, &top);
-			break;
-			case 4: display(arr,top);
-			break;
-			case 5: return 0;
-			default: printf("Invalid Input\n");
+			case 1:
+			 	push(size,arr,&top);
+				break;
+			case 2:
+				pop(size,arr,&top);
+				break;
+			case 3:
+				peek(arr, &top);
+				break;
+			case 4:
+				display(arr,top);
+				break;
+			case 5:
+				return 0;
+			default:
+				printf("Invalid Input\n");
 		}
 	}while(1);
 }
