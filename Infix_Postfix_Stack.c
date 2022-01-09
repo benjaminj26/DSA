@@ -12,8 +12,8 @@ int priority(char ch)
 		return 2;
 	else if(ch == '^')
 		return 3;
-	else 
-		return -1; 
+	else
+		return -1;
 }
 
 int push(char ch, char *stack, int top)
@@ -39,7 +39,7 @@ int pop(char *stack, int top)
 		top = -1;
 		return top;
 	}
-	else 
+	else
 	{
 		printf("%c",stack[top]);
 		top--;
@@ -60,7 +60,7 @@ int main()
 		if(expression[i] == '*')
 			size++;
 		else if(expression[i] == '/')
-			size++; 
+			size++;
 		else if(expression[i] == '+')
 			size++;
 		else if(expression[i] == '-')
@@ -76,7 +76,7 @@ int main()
 		int prty = priority(ch);
 		if(prty >= 0)
 		{
-			if(prty > priority(stack[top]) || stack[top] == '\0')
+			if(prty > priority(stack[top]) || top == -1)
 				top = push(ch,stack,top);
 			else if(prty <= priority(stack[top]))
 			{
