@@ -26,6 +26,12 @@ void enqueue(int size,int queue[],int *rear, int *front)
 		printf("Input the number: ");
 		scanf("%d", &queue[++(*rear)]);
 	}
+	else 
+	{
+		(*rear)++;
+		printf("Input the number: ");
+		scanf("%d",&queue[*rear]);
+	}
 }
 
 void dequeue(int size,int queue[],int *rear, int *front)
