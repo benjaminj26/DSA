@@ -33,10 +33,15 @@ int push(char ch, char *stack, int top)
 
 int pop(char *stack, int top)
 {
-	if(top == 0)
+	if(top == 0 && stack[top] != '(')
 	{
 		printf("%c", stack[top]);
-		top = -1;
+		top--;
+		return top;
+	}
+	else if(stack[top] == '(')
+	{
+		top--;
 		return top;
 	}
 	else
