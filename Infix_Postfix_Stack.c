@@ -55,27 +55,15 @@ int pop(char *stack, int top)
 int main()
 {
 	size_t buffer = 10;
-	int size = 0;
+	int size;
 	char *expression = (char*)calloc(buffer,1);
 	printf("Enter the expression:\n");
 	getline(&expression, &buffer, stdin);
-	expression[strlen(expression)-1] = '\0';
-	for(int i=0; i<strlen(expression); ++i)
-	{
-		if(expression[i] == '*')
-			size++;
-		else if(expression[i] == '/')
-			size++;
-		else if(expression[i] == '+')
-			size++;
-		else if(expression[i] == '-')
-			size++;
-		else if(expression[i] == '^')
-			size++;
-	}
-	char stack[size];
+	size = strlen(expression);
+	expression[size-1] = '\0';
+	char stack[size/2+1];
 	int top = -1;
-	for(int i=0; i<strlen(expression); ++i)
+	for(int i=0; i<size; ++i)
 	{
 		char ch = expression[i];
 		int prty = priority(ch);
@@ -91,12 +79,15 @@ int main()
 					{
 						top = pop(stack,top);
 					}
+					top = pop(stack,top);
 				}
 				else
 				{
 					while(prty <= priority(stack[top]))
 					{
 						top = pop(stack,top);
+						if(top == -1)
+							break;
 					}
 					top = push(ch,stack,top);
 				}
@@ -106,7 +97,7 @@ int main()
 		{
 			printf("%c",ch);
 		}
-		if(i == strlen(expression)-1)
+		if(i == size-1)
 		{
 			while(top >= 0)
 			{
