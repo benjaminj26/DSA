@@ -69,7 +69,7 @@ int main()
 		int prty = priority(ch);
 		if(prty >= 0)
 		{
-			if(prty > priority(stack[top]) || top == -1)
+			if(prty > priority(stack[top]) || top == -1 || ch == '(')
 				top = push(ch,stack,top);
 			else if(prty <= priority(stack[top]))
 			{
