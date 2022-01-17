@@ -58,57 +58,61 @@ void polynomial_init(int degree, struct node** head, struct node** tail)
 
 struct node* add_polynomial(struct node *poly1, struct node *poly2)
 {
-    struct node *head3 = NULL, *tail3 = NULL;
-    while(poly1 != NULL && poly2 != NULL)
+    struct node *head3 = NULL, *tail3 = NULL, *new_node;
+    while(poly1 != NULL || poly2 != NULL)
     {
         if(poly1->power == poly2->power)
         {
             int power = poly1->power;
             int coefficient = poly1->coeff + poly2->coeff;
-            struct node *new_node = create_node(power, coefficient);
-            if(head3 == NULL && tail3 == NULL)
-            {
-                head3 = new_node;
-                tail3 = new_node;
-            }
-            else
-            {
-                tail3->next = new_node;
-                tail3 = new_node;
-            }
+            new_node = create_node(power, coefficient);
+            poly1 = poly1->next;
+            poly2 = poly2->next;
         }
         else if(poly1->power > poly2->power)
         {
-            struct node *new_node = create_node(poly1->power, poly1->coeff);
-            if(head3 == NULL && tail3 == NULL)
-            {
-                head3 = new_node;
-                tail3 = new_node;
-            }
-            else
-            {
-                tail3->next = new_node;
-                tail3 = new_node;
-            }
+            new_node = create_node(poly1->power, poly1->coeff);
+            poly1 = poly1->next;
         }
         else if(poly1->power < poly2->power)
         {
-            struct node *new_node = create_node(poly2->power, poly2->coeff);
-            if(head3 == NULL && tail3 == NULL)
-            {
-                head3 = new_node;
-                tail3 = new_node;
-            }
-            else
-            {
-                tail3->next = new_node;
-                tail3 = new_node;
-            }
+            new_node = create_node(poly2->power, poly2->coeff);
+            poly2 = poly2->next;
         }
-        poly1 = poly1->next;
-        poly2 = poly2->next;
+        else if(poly1 != NULL && poly2 == NULL)
+        {
+            new_node = create_node(poly1->power, poly1->coeff);
+            poly1 = poly1->next;
+        }
+        else if(poly2 != NULL && poly1 == NULL)
+        {
+            new_node = create_node(poly2->power, poly2->coeff);
+            poly2 = poly2->next;
+        }
+
+        if(head3 == NULL && tail3 == NULL)
+        {
+            head3 = new_node;
+            tail3 = new_node;
+        }
+        else
+        {
+            tail3->next = new_node;
+            tail3 = new_node;
+        }
+
     }   
     return head3;
+}
+
+void free_node(struct node *polynomial)
+{
+    while(polynomial->next != NULL)
+    {
+        struct node *temp = polynomial;
+	polynomial = polynomial->next;
+	free(temp);
+    }
 }
 
 int main()
@@ -133,5 +137,8 @@ int main()
     struct node *head3 = add_polynomial(head1, head2);
     printf("\nThe sum of the two polynomials you entered is:\n");
     display(head3);
+    free(head1);
+    free(head2);
+    free(head3);
     return 0;
 }
