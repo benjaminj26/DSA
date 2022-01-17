@@ -138,8 +138,8 @@ int main()
     struct node *head3 = add_polynomial(head1, head2);
     printf("\nThe sum of the two polynomials you entered is:\n");
     display(head3);
-    free(head1);
-    free(head2);
-    free(head3);
+    free_node(head1);
+    free_node(head2);
+    free_node(head3);
     return 0;
 }
