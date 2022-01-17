@@ -110,8 +110,8 @@ void free_node(struct node *polynomial)
     while(polynomial->next != NULL)
     {
         struct node *temp = polynomial;
-	polynomial = polynomial->next;
-	free(temp);
+	    polynomial = polynomial->next;
+	    free(temp);
     }
 }
 
