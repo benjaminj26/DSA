@@ -89,10 +89,12 @@ int main()
                 break;
 
             case 3:
-                for(int i=0; i<size; ++i)
+                for(int i=1; i<size; ++i)
                 {
-                    if(tree[i] != -1)
-                        printf("%d ",i);
+                    if(tree[1] == -1)
+                        printf("\nThe tree is empty\n");
+                    else if(tree[i] != -1)
+                        printf("%d ",tree[i]);
                 }
                 printf("\n");
                 break;
@@ -100,6 +102,7 @@ int main()
             case 4:
                 exit(0);
         }
+        printf("\n");
 
     }while (1);
     return 0;
