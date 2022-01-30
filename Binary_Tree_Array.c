@@ -81,7 +81,15 @@ int main()
                         }
                         else
                         {
-                            printf("\nThe index specified is not a leaf node and thus cannot be deleted\n");
+                            for(int j=size/2-1; j>=1; --j)
+                            {
+                                if(tree[j*2+1] != -1)
+                                {
+                                    tree[i] = tree[j*2+1];
+                                    tree[j*2+1] = -1;
+                                    break;
+                                }
+                            }
                         }
                         break;
                     }
