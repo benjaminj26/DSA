@@ -9,6 +9,10 @@ int main()
     {
         tree[i] = -1;
     }
+    for(int i=0; i<15; ++i)
+    {
+        tree[i] = i*2+i*7;
+    }
     do
     {
         printf
@@ -16,11 +20,14 @@ int main()
             "1.Insert a number\n"
             "2.Delete a number\n"
             "3.Display the tree\n"
-            "4.Exit\n"
+            "4.Find the parent of a node\n"
+            "5.Find the children of a node\n"
+            "6.Find the index of a node\n"
+            "7.Exit\n"
             "Enter your choice: "    
         );
         int choice;
-        int number;
+        int number,flag;
         scanf("%d", &choice);
         switch(choice)
         {
@@ -68,12 +75,14 @@ int main()
                 break;
 
             case 2:
+                flag=0;
                 printf("\nEnter the element to be deleted: ");
                 scanf("%d", &number);
                 for(int i=0; i<size; ++i)
                 {
                     if(tree[i] == number)
                     {
+                        flag++;
                         if(tree[i*2] && tree[i*2+1] == -1)
                         {
                             tree[i] = -1;
@@ -93,21 +102,95 @@ int main()
                         break;
                     }
                 }
+                if(flag == 0)
+                    printf("\nElement not found\n");
                 break;
 
             case 3:
+                printf("\n");
                 for(int i=1; i<size; ++i)
                 {
                     if(tree[1] == -1)
                         printf("\nThe tree is empty\n");
                     else if(tree[i] != -1)
+                    {
                         printf("%d ",tree[i]);
+                    }
                 }
                 printf("\n");
                 break;
 
             case 4:
+                flag=0;
+                printf("\nEnter the element: ");
+                scanf("%d", &number);
+                for(int i=0; i<size; ++i)
+                {
+                    if(tree[i] == number)
+                    {
+                        flag++;
+                        printf("The parent of %d is %d\n", tree[i], tree[i/2]);
+                    }
+                }
+                if(flag == 0)
+                    printf("\nElement not found\n");
+                break;
+
+            case 5:
+                flag=0;
+                printf("\nEnter the element: ");
+                scanf("%d",&number);
+                for(int i=0; i<size; ++i)
+                {
+                    if(tree[i] == number)
+                    {
+                        flag++;
+                        if(tree[i*2] != -1 && tree[i*2+1] != -1)
+                        {
+                            printf("\nLeft child of %d is %d\n", tree[i], tree[i*2]);
+                            printf("Right child of %d is %d\n", tree[i], tree[i*2+1]);
+                        }
+                        else if(tree[i*2] == -1 && tree[i*2+1] != -1)
+                        {
+                            printf("\nLeft child of %d is empty\n", tree[i]);
+                            printf("Right child of %d is %d\n", tree[i], tree[i*2+1]);
+                        }
+                        else if(tree[i*2] != -1 && tree[i*2+1] == -1)
+                        {
+                            printf("\nLeft child of %d is %d\n", tree[i], tree[i*2]);
+                            printf("Right child of %d is empty\n", tree[i]);
+                        }
+                        else 
+                        {
+                            printf("\nThe node has no children\n");
+                        }
+                    }
+                }
+                if(flag == 0)
+                    printf("\nElement not found\n");
+                break;
+
+            case 6:
+                flag=0;
+                printf("\nEnter the element: ");
+                scanf("%d", &number);
+                for(int i=0; i<size; ++i)
+                {
+                    if(tree[i] == number)
+                    {
+                        flag++;
+                        printf("The index of %d is %d\n", number, i);
+                        break;
+                    }
+                }
+                if(flag == 0)
+                    printf("\nElement not found\n");
+                break;
+
+            case 7:
                 exit(0);
+            default:
+                printf("\nInvalid Input\n");
         }
         printf("\n");
 
