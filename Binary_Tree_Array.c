@@ -51,7 +51,7 @@ int main()
                             if(tree[index*2] == -1)
                                 tree[index*2] = number;
                             else
-                                printf("Index is already occupied\n");
+                                printf("\nIndex is already occupied\n");
                         }
                         else if(opt == 2)
                         {
