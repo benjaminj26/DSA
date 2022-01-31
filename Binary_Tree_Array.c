@@ -9,10 +9,6 @@ int main()
     {
         tree[i] = -1;
     }
-    for(int i=0; i<15; ++i)
-    {
-        tree[i] = i*2+i*7;
-    }
     do
     {
         printf
