@@ -14,16 +14,12 @@ int main()
     }
     for(int i=1; i<size; ++i)
     {
-        int key = array[i];
-        for(int j=i-1; j>=0; --j)
+        int key = array[i],j;
+        for(j=i-1; j>=0 && key<array[j]; --j)
         {
-            if(key < array[j])
-            {
-                int tmp = array[j];
-                array[j] = key;
-                array[j+1] = tmp;
-            }
+            array[j+1] = array[j];
         }
+        array[j+1] = key; 
     }
     printf("\nThe sorted array is:\n");
     for(int i=0; i<size; ++i)
