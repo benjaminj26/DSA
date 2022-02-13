@@ -74,8 +74,16 @@ void print_array(int array[], int size)
 
 int main()
 {
-    int array[] = {90,89, 67, 53, 43};
-    int size = sizeof(array)/sizeof(int);
+    int size;
+    printf("Enter the number of elements: ");
+    scanf("%d", &size);
+    int array[size];
+    printf("\nEnter %d elements:\n", size);
+    for(int i=0; i<size; ++i)
+    {
+        scanf("%d", &array[i]);
+    }
+    printf("\nThe sorted array is:\n");
     merge_sort(array, 0, size-1);
     print_array(array, size);
     return 0;
