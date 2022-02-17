@@ -51,9 +51,10 @@ int main()
 	scanf("%d", &size);
 	int top=-1;
 	int arr[size], opt;
+	printf("\n1.Push\n2.Pop\n3.Peek\n4.Display\n5.Exit\n");
 	do
 	{
-		printf("\n1.Push\n2.Pop\n3.Peek\n4.Display\n5.Exit\nEnter your choice: ");
+		printf("Enter your choice: ");
 		scanf("%d", &opt);
 		switch(opt)
 		{
