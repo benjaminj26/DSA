@@ -1,4 +1,5 @@
 #include<stdlib.h>
+#include<stdio.h>
 #include<limits.h>
 
 typedef struct node
@@ -67,10 +68,6 @@ node* insertGarbage(int p,node* H)
     }
     return H;
 }
-	
-
- 
-	
 
 void display(node * H)
 {
@@ -111,12 +108,8 @@ void display(node * H)
         }
         printf("%d -> ",p->size);
     }
-    printf("\n")
+    printf("\n");
 }
-	
-
- 
-	
 
 void displayGarbage(node * HG)
 {
