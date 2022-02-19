@@ -130,15 +130,15 @@ void free_all()
 
 int main()
 {
+    printf
+    (
+        "1.Input new element\n"
+        "2.Delete element\n"
+        "3.Display all elements\n"
+        "4.Exit\nEnter your choice: "
+    );
     do
     {
-        printf
-        (
-            "1.Input new element\n"
-            "2.Delete element\n"
-            "3.Display all elements\n"
-            "4.Exit\nEnter your choice: "
-        );
         int opt;
         scanf("%d", &opt);
         switch (opt) 

@@ -171,19 +171,19 @@ void display_elements()
 
 int main()
 {
+    printf
+    (
+        "1.Insert at the beginning\n"
+        "2.Insert at the end\n"
+        "3.Insert in front of a node\n"
+        "4.Delete at the beginning\n"
+        "5.Delete at the end\n"
+        "6.Delete node at a position\n"
+        "7.Display the elements\n"
+        "8.Exit\nEnter your choice: "
+    );
     do
     {
-        printf
-        (
-            "1.Insert at the beginning\n"
-            "2.Insert at the end\n"
-            "3.Insert in front of a node\n"
-            "4.Delete at the beginning\n"
-            "5.Delete at the end\n"
-            "6.Delete node at a position\n"
-            "7.Display the elements\n"
-            "8.Exit\nEnter your choice: "
-        );
         int option;
         scanf("%d", &option);
 

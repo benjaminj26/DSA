@@ -56,9 +56,10 @@ int main()
 	printf("Input the size of the queue: ");
 	scanf("%d", &size);
 	int queue[size];
+	printf("\n1.Enqueue\n2.Dequeue\n3.Display\n4.Exit\n");
 	do
 	{
-		printf("\n1.Enqueue\n2.Dequeue\n3.Display\n4.Exit\nInput your choice: ");
+		printf("Input your choice: ");
 		scanf("%d", &opt);
 		switch(opt)
 		{
