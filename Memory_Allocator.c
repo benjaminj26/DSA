@@ -194,7 +194,7 @@ int main()
 				HL=insert(t,HL);
 				display(HL);
 				break;
-				case 3:
+			case 3:
 				HG = delete(HL,HG);
 				break;
 			case 4:
