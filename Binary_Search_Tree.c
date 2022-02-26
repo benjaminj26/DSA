@@ -36,7 +36,7 @@ void insert_node(struct node **root, int number)
 
 struct node* traverse(struct node *root, int number)
 {
-    if(root->data == number)
+    if((root->left)->data == number || (root->right)->data == number)
     {
         return root;
     }
@@ -47,19 +47,36 @@ struct node* traverse(struct node *root, int number)
 
 void delete_node(struct node **root, int number)
 {
-    struct node *temp = traverse(*root, number);
-    if(temp == NULL)
-    {
-        printf("\nElement not found\n");
-    }
-    else
+    if((*root)->data == number)
     {
         struct node *swaper = *root;
-        while(swaper->left != NULL)
+        while((swaper->left)->left != NULL && (swaper->left)->right != NULL)
         {
             swaper = swaper->left;
         }
-        
+        (swaper->left)->left = (*root)->left;
+        (swaper->left)->right = (*root)->right;
+        struct node *temp = *root;
+        *root = swaper->left;
+        swaper->left = temp;
+        free(swaper->left);
+    }
+    else
+    {
+        struct node *temp = traverse(*root, number);
+        if(temp == NULL)
+        {
+            printf("\nElement not found\n");
+        }
+        else
+        {
+            struct node *swaper = *root;
+            while(swaper->left != NULL)
+            {
+                swaper = swaper->left;
+            }
+            
+        }
     }
 }
 
