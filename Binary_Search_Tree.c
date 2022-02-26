@@ -34,15 +34,18 @@ void insert_node(struct node **root, int number)
     }
 }
 
-struct node* traverse(struct node *root, int number)
+void traverse(struct node *root, struct node *swaper, int number)
 {
+    if(root == NULL)
+    {
+        return;
+    }
     if((root->left)->data == number || (root->right)->data == number)
     {
-        return root;
+        swaper = root;
     }
-    traverse(root->left,number);
-    traverse(root->right, number);
-    return NULL;
+    traverse(root->left, swaper, number);
+    traverse(root->right, swaper, number);
 }
 
 void delete_node(struct node **root, int number)
@@ -54,16 +57,18 @@ void delete_node(struct node **root, int number)
         {
             swaper = swaper->right;
         }
-        (swaper->left)->left = (*root)->left;
-        (swaper->left)->right = (*root)->right;
+        (swaper->right)->left = (*root)->left;
+        (swaper->right)->right = (*root)->right;
         struct node *temp = *root;
-        *root = swaper->left;
+        *root = swaper->right;
         swaper->right = temp;
         free(swaper->right);
+        swaper->right = NULL;
     }
     else
     {
-        struct node *temp = traverse(*root, number);
+        struct node *temp = NULL;
+        traverse(*root, temp, number);
         if(temp == NULL)
         {
             printf("\nElement not found\n");
@@ -71,11 +76,37 @@ void delete_node(struct node **root, int number)
         else
         {
             struct node *swaper = *root;
-            while(swaper->left != NULL)
+            if(swaper == NULL)
             {
-                swaper = swaper->left;
+                return;
             }
-            
+            while((swaper->right)->left != NULL || (swaper->right)->right != NULL)
+            {
+                if(swaper->right != NULL)
+                    swaper = swaper->right;
+                else
+                    swaper = swaper->left;
+            }
+            if((temp->left)->data == number)
+            {
+                (swaper->right)->left = (temp->left)->left;
+                (swaper->right)->right = (temp->left)->right;
+                struct node *trash = temp->left;
+                temp->left = swaper->right;
+                swaper->right = trash;
+                free(swaper->right);
+                swaper->right = NULL;
+            }
+            else if((temp->right)->data == number)
+            {
+                (swaper->right)->left = (temp->right)->left;
+                (swaper->right)->right = (temp->right)->right;
+                struct node *trash = temp->right;
+                temp->right = swaper->right;
+                swaper->right = trash;
+                free(swaper->right);
+                swaper->right = NULL;
+            }
         }
     }
 }
@@ -123,7 +154,9 @@ int main()
                 }
                 else 
                 {
-                    
+                    printf("\nEnter the number to delete: ");
+                    scanf("%d", &number);
+                    delete_node(&root, number);
                 }
 
             case 3:
