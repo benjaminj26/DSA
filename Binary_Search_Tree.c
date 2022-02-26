@@ -50,16 +50,16 @@ void delete_node(struct node **root, int number)
     if((*root)->data == number)
     {
         struct node *swaper = *root;
-        while((swaper->left)->left != NULL && (swaper->left)->right != NULL)
+        while((swaper->right)->left != NULL && (swaper->right)->right != NULL)
         {
-            swaper = swaper->left;
+            swaper = swaper->right;
         }
         (swaper->left)->left = (*root)->left;
         (swaper->left)->right = (*root)->right;
         struct node *temp = *root;
         *root = swaper->left;
-        swaper->left = temp;
-        free(swaper->left);
+        swaper->right = temp;
+        free(swaper->right);
     }
     else
     {
