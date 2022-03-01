@@ -6,6 +6,7 @@ struct node
     int data;
     struct node *left;
     struct node *right;
+    struct node *previous;
 };
 
 struct node* create_node(int num)
@@ -14,101 +15,101 @@ struct node* create_node(int num)
     new_node->data = num;
     new_node->left = NULL;
     new_node->right = NULL;
+    new_node->previous = NULL;
     return new_node;
 }
 
-void insert_node(struct node **root, int number)
+void insert_node(struct node **root, struct node *current, int number)
 {
     if(*root == NULL)
     {
         struct node *new_node = create_node(number);
+        if(new_node == NULL)
+        {
+            printf("\nUnable to create node\n");
+            return;
+        }
+        new_node->previous = current;
         *root = new_node;
     }
     else if(number <= (*root)->data)
     {
-        insert_node(&(*root)->left, number);
+        insert_node(&(*root)->left, *root, number);
     }
     else if(number > (*root)->data)
     {
-        insert_node(&(*root)->right, number);
+        insert_node(&(*root)->right, *root, number);
     }
 }
 
-void traverse(struct node *root, struct node *swaper, int number)
+struct node* get_location(struct node *root, int number)
+{
+    if(root->data == number)
+    {
+        return root;
+    }
+    else if(number <= root->data)
+    {
+        get_location(root->left, number);
+    }
+    else 
+    {
+        get_location(root->right, number);    
+    }
+}
+
+struct node* get_largest_element(struct node *root, struct node *largest)
 {
     if(root == NULL)
     {
-        return;
+        return largest;
     }
-    if((root->left)->data == number || (root->right)->data == number)
+    if(largest == NULL)
     {
-        swaper = root;
+        largest = root;
     }
-    traverse(root->left, swaper, number);
-    traverse(root->right, swaper, number);
+    else if(largest->data <= root->data)
+    {
+        largest = root;
+    }
+    largest = get_largest_element(root->left, largest);
+    largest = get_largest_element(root->right, largest);
+    return largest;
 }
 
-void delete_node(struct node **root, int number)
+void delete_node(struct node *root, int number)
 {
-    if((*root)->data == number)
+    struct node *temp1 = get_location(root, number);
+    struct node *temp2 = get_largest_element(temp1, NULL);
+    struct node *trash = NULL;
+    temp2->left = temp1->left;
+    temp2->right = temp1->right;
+    trash = temp1;
+    if((temp1->previous)->left == temp1)
     {
-        struct node *swaper = *root;
-        while((swaper->right)->left != NULL && (swaper->right)->right != NULL)
+        (temp1->previous)->left = temp2;
+        if((temp2->previous)->left == temp2)
         {
-            swaper = swaper->right;
-        }
-        (swaper->right)->left = (*root)->left;
-        (swaper->right)->right = (*root)->right;
-        struct node *temp = *root;
-        *root = swaper->right;
-        swaper->right = temp;
-        free(swaper->right);
-        swaper->right = NULL;
-    }
-    else
-    {
-        struct node *temp = NULL;
-        traverse(*root, temp, number);
-        if(temp == NULL)
-        {
-            printf("\nElement not found\n");
+            (temp2->previous)->left = NULL;
         }
         else
         {
-            struct node *swaper = *root;
-            if(swaper == NULL)
-            {
-                return;
-            }
-            while((swaper->right)->left != NULL || (swaper->right)->right != NULL)
-            {
-                if(swaper->right != NULL)
-                    swaper = swaper->right;
-                else
-                    swaper = swaper->left;
-            }
-            if((temp->left)->data == number)
-            {
-                (swaper->right)->left = (temp->left)->left;
-                (swaper->right)->right = (temp->left)->right;
-                struct node *trash = temp->left;
-                temp->left = swaper->right;
-                swaper->right = trash;
-                free(swaper->right);
-                swaper->right = NULL;
-            }
-            else if((temp->right)->data == number)
-            {
-                (swaper->right)->left = (temp->right)->left;
-                (swaper->right)->right = (temp->right)->right;
-                struct node *trash = temp->right;
-                temp->right = swaper->right;
-                swaper->right = trash;
-                free(swaper->right);
-                swaper->right = NULL;
-            }
+            (temp2->previous)->right = NULL;
         }
     }
+    else 
+    {
+        (temp1->previous)->right = temp2;
+        if((temp2->previous)->left == temp2)
+        {
+            (temp2->previous)->left = NULL;
+        }
+        else
+        {
+            (temp2->previous)->right = NULL;
+        }
+    }
+    free(trash);
 }
 
 void display_tree(struct node *root)
@@ -144,7 +145,7 @@ int main()
             case 1:
                 printf("\nEnter the number: ");
                 scanf("%d", &number);
-                insert_node(&root, number);
+                insert_node(&root, NULL, number);
                 break;
             
             case 2:
@@ -154,10 +155,11 @@ int main()
                 }
                 else 
                 {
-                    printf("\nEnter the number to delete: ");
+                    printf("Enter the number to be deleted: ");
                     scanf("%d", &number);
-                    delete_node(&root, number);
+                    delete_node(root, number);
                 }
+                break;
 
             case 3:
                 if(root == NULL)
