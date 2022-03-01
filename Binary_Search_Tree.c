@@ -80,36 +80,40 @@ struct node* get_largest_element(struct node *root, struct node *largest)
 void delete_node(struct node *root, int number)
 {
     struct node *temp1 = get_location(root, number);
-    struct node *temp2 = get_largest_element(temp1, NULL);
+    struct node *temp2 = get_largest_element(temp1->left, NULL);
     struct node *trash = NULL;
-    temp2->left = temp1->left;
-    temp2->right = temp1->right;
-    trash = temp1;
-    if((temp1->previous)->left == temp1)
+    if(temp2->left == NULL && temp2->right == NULL)
     {
-        (temp1->previous)->left = temp2;
-        if((temp2->previous)->left == temp2)
+        temp2->left = temp1->left;
+        temp2->right = temp1->right;
+        trash = temp1;
+        if((temp1->previous)->left == temp1)
         {
-            (temp2->previous)->left = NULL;
+            (temp1->previous)->left = temp2;
+            if((temp2->previous)->left == temp2)
+            {
+                (temp2->previous)->left = NULL;
+            }
+            else
+            {
+                (temp2->previous)->right = NULL;
+            }
         }
-        else
+        else 
         {
-            (temp2->previous)->right = NULL;
+            (temp1->previous)->right = temp2;
+            if((temp2->previous)->left == temp2)
+            {
+                (temp2->previous)->left = NULL;
+            }
+            else
+            {
+                (temp2->previous)->right = NULL;
+            }
         }
+        free(trash);
     }
-    else 
-    {
-        (temp1->previous)->right = temp2;
-        if((temp2->previous)->left == temp2)
-        {
-            (temp2->previous)->left = NULL;
-        }
-        else
-        {
-            (temp2->previous)->right = NULL;
-        }
-    }
-    free(trash);
+
 }
 
 void display_tree(struct node *root)
