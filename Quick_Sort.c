@@ -6,7 +6,7 @@ int partition(int array[], int low, int upp)
     int end = upp;
     int pivot = array[low];
     
-    while(array[start] <= pivot && start < end)
+    while(array[start] <= pivot)
     {
         start++;
     }

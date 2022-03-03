@@ -175,11 +175,11 @@ int main()
     node* HL = NULL;
     node* HG = NULL;
     int n,pos;
+    printf("\n\n============================");
+	printf("\n1.Display\n2.Insert\n3.Delete\n4.Collect Garbage\n5.Exit");
+	printf("\n============================");
     while (1)
     {
-    	printf("\n\n============================");
-		printf("\n1.Display\n2.Insert\n3.Delete\n4.Collect Garbage\n5.Exit");
-		printf("\n============================");
 		printf("\nEnter Choice : ");
 		fflush(stdin);
 		scanf("%d", &n);

@@ -180,10 +180,11 @@ int main()
         "5.Delete at the end\n"
         "6.Delete node at a position\n"
         "7.Display the elements\n"
-        "8.Exit\nEnter your choice: "
+        "8.Exit\n"
     );
     do
     {
+        printf("Enter your choice: ");
         int option;
         scanf("%d", &option);
 

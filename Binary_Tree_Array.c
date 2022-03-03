@@ -9,19 +9,19 @@ int main()
     {
         tree[i] = -1;
     }
+    printf
+    (
+        "1.Insert a number\n"
+        "2.Delete a number\n"
+        "3.Display the tree\n"
+        "4.Find the parent of a node\n"
+        "5.Find the children of a node\n"
+        "6.Find the index of a node\n"
+        "7.Exit\n"    
+    );
     do
     {
-        printf
-        (
-            "1.Insert a number\n"
-            "2.Delete a number\n"
-            "3.Display the tree\n"
-            "4.Find the parent of a node\n"
-            "5.Find the children of a node\n"
-            "6.Find the index of a node\n"
-            "7.Exit\n"
-            "Enter your choice: "    
-        );
+        printf("Enter your choice: ");
         int choice;
         int number,flag;
         scanf("%d", &choice);

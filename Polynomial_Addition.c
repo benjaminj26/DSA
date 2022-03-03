@@ -33,24 +33,30 @@ struct node* create_node(int power, int coeff)
 
 void polynomial_init(int degree, struct node** head)
 {
-    struct node *tail;
-    for(int i=degree; i>=0; --i)
+    struct node *tail = NULL;
+    for(int i=0; i<degree; ++i)
     {
         if(*head == NULL && tail == NULL)
         {
-            printf("Enter the coefficient of the term of power %d: ",i);
+            printf("Enter the coefficient of term%d: ",i+1);
             int coeff;
             scanf("%d", &coeff);
-            struct node *new_node = create_node(i, coeff);
+            printf("Enter the power of term%d: ", i+1);
+            int power;
+            scanf("%d", &power);
+            struct node *new_node = create_node(power, coeff);
             *head = new_node;
             tail = new_node;
         }
         else
         {
-            printf("Enter the coefficient of the term of power %d: ",i);
+            printf("Enter the coefficient of term%d: ",i+1);
             int coeff;
             scanf("%d", &coeff);
-            struct node *new_node = create_node(i, coeff);
+            printf("Enter the power of term%d: ", i+1);
+            int power;
+            scanf("%d", &power);
+            struct node *new_node = create_node(power, coeff);
             tail->next = new_node;
             tail = new_node;
         }
@@ -62,7 +68,17 @@ struct node* add_polynomial(struct node *poly1, struct node *poly2)
     struct node *head3 = NULL, *tail3 = NULL, *new_node;
     while(poly1 != NULL || poly2 != NULL)
     {
-        if(poly1->power == poly2->power)
+        if(poly1 != NULL && poly2 == NULL)
+        {
+            new_node = create_node(poly1->power, poly1->coeff);
+            poly1 = poly1->next;
+        }
+        else if(poly2 != NULL && poly1 == NULL)
+        {
+            new_node = create_node(poly2->power, poly2->coeff);
+            poly2 = poly2->next;
+        }
+        else if(poly1->power == poly2->power)
         {
             int power = poly1->power;
             int coefficient = poly1->coeff + poly2->coeff;
@@ -76,16 +92,6 @@ struct node* add_polynomial(struct node *poly1, struct node *poly2)
             poly1 = poly1->next;
         }
         else if(poly1->power < poly2->power)
-        {
-            new_node = create_node(poly2->power, poly2->coeff);
-            poly2 = poly2->next;
-        }
-        else if(poly1 != NULL && poly2 == NULL)
-        {
-            new_node = create_node(poly1->power, poly1->coeff);
-            poly1 = poly1->next;
-        }
-        else if(poly2 != NULL && poly1 == NULL)
         {
             new_node = create_node(poly2->power, poly2->coeff);
             poly2 = poly2->next;
@@ -118,19 +124,19 @@ void free_node(struct node *polynomial)
 
 int main()
 {
-    int degree1, degree2;
+    int terms1, terms2;
     struct node *head1 = NULL, *head2 = NULL;
     
-    printf("Enter the degree of the first polynomial: ");
-    scanf("%d", &degree1);
-    polynomial_init(degree1, &head1);
+    printf("Enter the number of terms of the first polynomial: ");
+    scanf("%d", &terms1);
+    polynomial_init(terms1, &head1);
     printf("\nThe first polynomial is:\n");
     display(head1);
     printf("\n");
     
-    printf("Enter the degree of the second polynomial: ");
-    scanf("%d", &degree2);
-    polynomial_init(degree2, &head2);
+    printf("Enter the number of terms of the second polynomial: ");
+    scanf("%d", &terms2);
+    polynomial_init(terms2, &head2);
     printf("\nThe second polynomial is:\n");
     display(head2);
     printf("\n");
