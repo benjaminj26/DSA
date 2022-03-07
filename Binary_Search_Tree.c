@@ -125,7 +125,6 @@ void delete_node(struct node *root, int number)
         else
             temp2->right = NULL;
         trash = temp1;
-        printf("%d\n", temp2->data);
         if((temp1->previous)->left == temp1)
         {
             (temp1->previous)->left = temp2;
