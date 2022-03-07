@@ -37,10 +37,10 @@ int main()
 			}
 		}
 	}
-	printf("Sparse matrix representation is:\nRow	Column	Element\n");
+	printf("Sparse matrix representation is:\n%d  %d  %d\n", row, col, z_count);
 	for(int i=0; i<z_count; ++i)
 	{
-		printf("%d	%d	%d\n", sparse[i][0], sparse[i][1], sparse[i][2]);
+		printf("%d  %d  %d\n", sparse[i][0], sparse[i][1], sparse[i][2]);
 	}
 	return 0;
 }
