@@ -31,7 +31,7 @@ void dequeue(int *queue)
     printf("%d ", queue[front++]);
 }
 
-void bfs(int *array)
+void bfs(int *array, int **adjacency_matrix)
 {
     int size = sizeof(array)/4;
     int visited[size];
@@ -39,8 +39,22 @@ void bfs(int *array)
     printf("Enter the index of the root node: ");
     int index;
     scanf("%d", &index);
-    
+    // printf("%d ", array[index]);
     visited[index] = 1;
+    int queue[size];
+    enqueue(queue, array[index]);
+    for(int i=0; i<size; ++i)
+    {
+        if(adjacency_matrix[index][i] == 1)
+        {
+            dequeue(queue);
+            if(visited[i] == 0)
+            {
+                enqueue(queue, array[i]);
+                visited[i] = 1;
+            }
+        }
+    }
 }
 
 void dfs(int *array)
