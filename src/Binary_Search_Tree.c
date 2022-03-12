@@ -44,7 +44,11 @@ void insert_node(struct node **root, struct node *current, int number)
 
 struct node* get_location(struct node *root, int number)
 {
-    if(root->data == number)
+    if(root == NULL)
+    {
+        return NULL;
+    }
+    else if(root->data == number)
     {
         return root;
     }
@@ -152,6 +156,11 @@ void replacer(struct node *temp1, struct node *temp2)
 void delete_node(struct node **root, int number)
 {
     struct node *temp1 = get_location(*root, number);
+    if(temp1 == NULL)
+    {
+        printf("\nElement not found\n");
+        return;
+    }
     struct node *temp2 = get_largest_element(temp1->left, NULL);
     struct node *trash = NULL;
     if(temp2 == NULL)
