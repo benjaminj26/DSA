@@ -50,12 +50,13 @@ struct node* get_location(struct node *root, int number)
     }
     else if(number <= root->data)
     {
-        get_location(root->left, number);
+        root = get_location(root->left, number);
     }
     else 
     {
-        get_location(root->right, number);    
+        root = get_location(root->right, number);    
     }
+    return root;
 }
 
 struct node* get_largest_element(struct node *root, struct node *largest)
@@ -74,6 +75,7 @@ struct node* get_largest_element(struct node *root, struct node *largest)
     }
     largest = get_largest_element(root->right, largest);
     largest = get_largest_element(root->left, largest);
+    return largest;
 }
 
 struct node* get_smallest_element(struct node *root, struct node *smallest)
@@ -92,16 +94,109 @@ struct node* get_smallest_element(struct node *root, struct node *smallest)
     }
     smallest = get_smallest_element(root->left, smallest);   
     smallest = get_smallest_element(root->right, smallest);
+    return smallest;
 }
 
-void delete_node(struct node *root, int number)
+void replacer(struct node *temp1, struct node *temp2)
 {
-    struct node *temp1 = get_location(root, number);
+    struct node *temp3 = create_node(temp1->data);
+    temp3->left = temp2->left;
+    temp3->right = temp2->right;
+    temp3->previous = temp2->previous;
+    if(temp1->left != temp2)
+    {
+        temp2->left = temp1->left;
+        (temp2->left)->previous = temp2;
+    }
+    else
+        temp2->left = NULL;
+    if(temp1->right != temp2)
+    {
+        temp2->right = temp1->right;
+        (temp2->right)->previous = temp2;
+    }
+    else
+        temp2->right = NULL;
+    if((temp1->previous)->left == temp1)
+    {
+        (temp1->previous)->left = temp2;
+        if((temp2->previous)->left == temp2)
+        {
+            (temp2->previous)->left = temp1;
+        }
+        else
+        {
+            (temp2->previous)->right = temp1;
+        }
+        temp2->previous = temp1->previous;
+    }
+    else if((temp1->previous)->right == temp1)
+    {
+        (temp1->previous)->right = temp2;
+        if((temp2->previous)->left == temp2)
+        {
+            (temp2->previous)->left = temp1;
+        }
+        else
+        {
+            (temp2->previous)->right = temp1;
+        }
+        temp2->previous = temp1->previous;
+    }
+    temp1->previous = temp3->previous;
+    temp1->left = temp3->left;
+    temp1->right = temp3->right;
+
+}
+
+void delete_node(struct node **root, int number)
+{
+    struct node *temp1 = get_location(*root, number);
     struct node *temp2 = get_largest_element(temp1->left, NULL);
     struct node *trash = NULL;
     if(temp2 == NULL)
         temp2 = get_smallest_element(temp1->right, NULL);
-    if(temp2 == NULL)
+    if(temp1 == *root)
+    {
+        if(temp2 == NULL)
+        {
+            *root = NULL;
+            free(temp1);           
+        }
+        else if(temp2->left == NULL && temp2->right == NULL)
+        {
+            if((*root)->left != temp2)
+            {
+                temp2->left = (*root)->left;
+                ((*root)->left)->previous = temp2;
+            }
+            else
+                temp2->left = NULL;
+            if((*root)->right != temp2)
+            {
+                temp2->right = (*root)->right;
+                ((*root)->right)->previous = temp2;
+            }
+            else
+                temp2->left = NULL;
+            temp2->previous = NULL;
+            *root = temp2;
+            free(temp1);
+        }
+        else 
+        {
+            struct node *new_temp1 = get_largest_element(temp2->left, NULL);
+            if(new_temp1 == NULL)
+                new_temp1 = get_smallest_element(temp2->right, NULL);
+            replacer(temp2, new_temp1);
+            temp2->left = (*root)->left;
+            temp2->right = (*root)->right;
+            temp2->previous = NULL;
+            *root = temp2;
+            free(temp1);
+        }
+    }
+    else if(temp2 == NULL)
     {
         trash = temp1;
         if((temp1->previous)->left == temp1)
@@ -116,110 +211,33 @@ void delete_node(struct node *root, int number)
     }
     else if(temp2->left == NULL && temp2->right == NULL)
     {
-        if(temp1->left != temp2)
-            temp2->left = temp1->left;
-        else
-            temp2->left = NULL;
-        if(temp1->right != temp2)
-            temp2->right = temp1->right;
-        else
-            temp2->right = NULL;
-        trash = temp1;
+        replacer(temp1, temp2);
         if((temp1->previous)->left == temp1)
         {
-            (temp1->previous)->left = temp2;
-            if((temp2->previous)->left == temp2)
-            {
-                (temp2->previous)->left = NULL;
-            }
-            else
-            {
-                (temp2->previous)->right = NULL;
-            }
-            temp2->previous = temp1->previous;
+            (temp1->previous)->left = NULL;
         }
-        else if((temp1->previous)->right == temp1)
+        else 
         {
-            (temp1->previous)->right = temp2;
-            if((temp2->previous)->left == temp2)
-            {
-                (temp2->previous)->left = NULL;
-            }
-            else
-            {
-                (temp2->previous)->right = NULL;
-            }
-            temp2->previous = temp1->previous;
+            (temp1->previous)->right = NULL;
         }
-        free(trash);
+        free(temp1);
     }
     else 
     {
         struct node *new_temp1 = get_largest_element(temp2->left, NULL);
         if(new_temp1 == NULL)
             new_temp1 = get_smallest_element(temp2->right, NULL);
-        if(temp2->left != new_temp1)
-            new_temp1->left = temp2->left;
-        else
-            new_temp1->left = NULL;
-        if(temp2->right != new_temp1)
-            new_temp1->right = temp2->right;
-        else
-            new_temp1->right = NULL;
-        if((temp2->previous)->left == temp2)
-        {
-            (temp2->previous)->left = new_temp1;
-            if((new_temp1->previous)->left == new_temp1)
-                (new_temp1->previous)->left = NULL;
-            else
-                (new_temp1->previous)->right = NULL;
-            new_temp1->previous = temp2->previous;
-        }
-        else if((temp2->previous)->right == temp2)
-        {
-            (temp2->previous)->right = new_temp1;
-            if((new_temp1->previous)->left == new_temp1)
-                (new_temp1->previous)->left = NULL;
-            else
-                (new_temp1->previous)->right = NULL;
-            new_temp1->previous = temp2->previous;
-        }
-        if(temp1->left != temp2)
-            temp2->left = temp1->left;
-        else
-            temp2->left = NULL;
-        if(temp1->right != temp2)
-            temp2->right = temp1->right;
-        else
-            temp2->right = NULL;
-        trash = temp1;
+        replacer(temp2, new_temp1);
+        replacer(temp1, temp2);
         if((temp1->previous)->left == temp1)
         {
-            (temp1->previous)->left = temp2;
-            if((temp2->previous)->left == temp2)
-            {
-                (temp2->previous)->left = NULL;
-            }
-            else
-            {
-                (temp2->previous)->right = NULL;
-            }
-            temp2->previous = temp1->previous;
+            (temp1->previous)->left = NULL;
         }
-        else if((temp1->previous)->right == temp1)
+        else 
         {
-            (temp1->previous)->right = temp2;
-            if((temp2->previous)->left == temp2)
-            {
-                (temp2->previous)->left = NULL;
-            }
-            else
-            {
-                (temp2->previous)->right = NULL;
-            }
-            temp2->previous = temp1->previous;
+            (temp1->previous)->right = NULL;
         }
-        free(trash);
+        free(temp1);
     }
 }
 
@@ -274,7 +292,7 @@ int main()
                         root = NULL;
                     }
                     else
-                        delete_node(root, number);
+                        delete_node(&root, number);
                 }
                 break;
 
