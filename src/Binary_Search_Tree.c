@@ -107,64 +107,86 @@ void replacer(struct node *temp1, struct node *temp2)
     temp3->left = temp2->left;
     temp3->right = temp2->right;
     temp3->previous = temp2->previous;
-    if(temp1->left != temp2)
+    if(temp1->left == temp2)
     {
-        temp2->left = temp1->left;
-        (temp2->left)->previous = temp2;
-    }
-    else if(temp1->left == temp2)
-    {
-        struct node *temp4 = temp2->left;
         temp2->left = temp1;
-        temp1->left = temp4;
+        temp2->right = temp1->right;
+        temp1->left = temp3->left;
+        temp1->right = temp3->right;
+        if((temp1->previous)->left == temp1)
+        {
+            (temp1->previous)->left = temp2;
+        }
+        else if((temp1->previous)->right == temp1)
+        {
+            (temp1->previous)->right = temp2;
+        }
         temp2->previous = temp1->previous;
         temp1->previous = temp2;
-
-    }
-    if(temp1->right != temp2)
-    {
-        temp2->right = temp1->right;
-        (temp2->right)->previous = temp2;
     }
     else if(temp1->right == temp2)
     {
-        struct node *temp4 = temp2->right;
         temp2->right = temp1;
-        temp1->right = temp4;
+        temp2->left = temp1->left;
+        temp1->right = temp3->right;
+        temp1->left = temp3->left;
+        if((temp1->previous)->left == temp1)
+        {
+            (temp1->previous)->left = temp2;
+        }
+        else if((temp1->previous)->right == temp1)
+        {
+            (temp1->previous)->right = temp2;
+        }
         temp2->previous = temp1->previous;
         temp1->previous = temp2;
-
     }
-    if((temp1->previous)->left == temp1)
+    else
     {
-        (temp1->previous)->left = temp2;
-        if((temp2->previous)->left == temp2)
-        {
-            (temp2->previous)->left = temp1;
-        }
-        else
-        {
-            (temp2->previous)->right = temp1;
-        }
-        temp2->previous = temp1->previous;
-    }
-    else if((temp1->previous)->right == temp1)
-    {
-        (temp1->previous)->right = temp2;
-        if((temp2->previous)->left == temp2)
-        {
-            (temp2->previous)->left = temp1;
-        }
-        else
-        {
-            (temp2->previous)->right = temp1;
-        }
-        temp2->previous = temp1->previous;
-    }
-    // temp1->previous = temp3->previous;
-    temp1->left = temp3->left;
-    temp1->right = temp3->right;
+        temp2->left = temp1->left;
+        temp2->right = temp1->right;
+        temp1->left = temp3->left;
+        temp1->right = temp3->right;
+        if(temp2->left != NULL)
+            (temp2->left)->previous = temp2;
+        if(temp2->right != NULL)
+            (temp2->right)->previous = temp2;
+        if(temp1->left != NULL)
+            (temp1->left)->previous = temp1;
+        if(temp1->right != NULL)
+            (temp1->right)->previous = temp1;
 
+        //Changing the previous elements of the nodes
+        if((temp1->previous)->left == temp1)
+        {
+            (temp1->previous)->left = temp2;
+            if((temp2->previous)->left == temp2)
+            {
+                (temp2->previous)->left = temp1;
+            }
+            else
+            {
+                (temp2->previous)->right = temp1;
+            }
+            temp2->previous = temp1->previous;
+            temp1->previous = temp3->previous;
+        }
+        else if((temp1->previous)->right == temp1)
+        {
+            (temp1->previous)->right = temp2;
+            if((temp2->previous)->left == temp2)
+            {
+                (temp2->previous)->left = temp1;
+            }
+            else
+            {
+                (temp2->previous)->right = temp1;
+            }
+            temp2->previous = temp1->previous;
+            temp1->previous = temp3->previous;
+        }
+    }
+    free(temp3);
 }
 
 void delete_node(struct node **root, int number)
@@ -188,23 +210,50 @@ void delete_node(struct node **root, int number)
         }
         else if(temp2->left == NULL && temp2->right == NULL)
         {
-            if((*root)->left != temp2)
+            struct node *temp3 = create_node(temp1->data);
+            temp3->left = temp2->left;
+            temp3->right = temp2->right;
+            temp3->previous = temp2->previous;
+            if(temp1->left == temp2)
             {
-                temp2->left = (*root)->left;
-                ((*root)->left)->previous = temp2;
+                temp2->left = temp1;
+                temp2->right = temp1->right;
+                temp1->left = temp3->left;
+                temp1->right = temp3->right;
+                if(temp2->left != NULL)
+                    (temp2->left)->previous = temp2;
+                if(temp2->right != NULL)
+                    (temp2->right)->previous = temp2;
+                temp1->previous = temp2;
+            }
+            else if(temp1->right == temp2)
+            {
+                temp2->right = temp1;
+                temp2->left = temp1->left;
+                temp1->right = temp3->right;
+                temp1->left = temp3->left;
+                if(temp2->left != NULL)
+                    (temp2->left)->previous = temp2;
+                if(temp2->right != NULL)
+                    (temp2->right)->previous = temp2;
+                temp1->previous = temp2;
             }
             else
-                temp2->left = NULL;
-            if((*root)->right != temp2)
             {
-                temp2->right = (*root)->right;
-                ((*root)->right)->previous = temp2;
+                temp2->left = temp1->left;
+                temp2->right = temp1->right;
+                temp1->left = temp3->left;
+                temp1->right = temp3->right;
+                if(temp2->left != NULL)
+                    (temp2->left)->previous = temp2;
+                if(temp2->right != NULL)
+                    (temp2->right)->previous = temp2;
+                temp1->previous = temp2->previous;
             }
-            else
-                temp2->left = NULL;
             temp2->previous = NULL;
             *root = temp2;
             free(temp1);
+            free(temp3);
         }
         else 
         {
@@ -215,19 +264,54 @@ void delete_node(struct node **root, int number)
                     new_temp1 = get_smallest_element(temp2->right, NULL);
                 replacer(temp2, new_temp1);
             }
-            temp2->left = (*root)->left;
-            temp2->right = (*root)->right;
-            if((temp2->previous)->left == temp2)
+            struct node *temp3 = create_node(temp1->data);
+            temp3->left = temp2->left;
+            temp3->right = temp2->right;
+            temp3->previous = temp2->previous;
+            if(temp1->left == temp2)
             {
-                (temp2->previous)->left = NULL;
+                temp2->left = temp1;
+                temp2->right = temp1->right;
+                temp1->left = temp3->left;
+                temp1->right = temp3->right;
+                if(temp2->left != NULL)
+                    (temp2->left)->previous = temp2;
+                if(temp2->right != NULL)
+                    (temp2->right)->previous = temp2;
+                temp1->previous = temp2;
             }
-            else 
+            else if(temp1->right == temp2)
             {
-                (temp2->previous)->right = NULL;
+                temp2->right = temp1;
+                temp2->left = temp1->left;
+                temp1->right = temp3->right;
+                temp1->left = temp3->left;
+                if(temp2->left != NULL)
+                    (temp2->left)->previous = temp2;
+                if(temp2->right != NULL)
+                    (temp2->right)->previous = temp2;
+                temp1->previous = temp2;
+            }
+            else
+            {
+                temp2->left = temp1->left;
+                temp2->right = temp1->right;
+                temp1->left = NULL;
+                temp1->right = NULL;
+                if(temp2->left != NULL)
+                    (temp2->left)->previous = temp2;
+                if(temp2->right != NULL)
+                    (temp2->right)->previous = temp2;
+                temp1->previous = temp2->previous;
+                if((temp1->previous)->left == temp1)
+                    (temp1->previous)->left = NULL;
+                else
+                    (temp1->previous)->right = NULL;
             }
             temp2->previous = NULL;
             *root = temp2;
             free(temp1);
+            free(temp3);
         }
     }
     else if(temp2 == NULL)
@@ -265,13 +349,6 @@ void delete_node(struct node **root, int number)
                 new_temp1 = get_smallest_element(temp2->right, NULL);
             replacer(temp2, new_temp1);
         }
-        // while(new_temp1->left != NULL || new_temp1->right != NULL)
-        // {
-        //     struct node *new_temp2 = get_largest_element(new_temp1->left, NULL);
-        //     if(new_temp2 == NULL)
-        //         new_temp2 = get_smallest_element(new_temp1->right, NULL);
-        //     replacer(new_temp1, new_temp2);
-        // }
         replacer(temp1, temp2);
         if((temp1->previous)->left == temp1)
         {
