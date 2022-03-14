@@ -218,25 +218,19 @@ void delete_node(struct node **root, int number)
             {
                 temp2->left = NULL;
                 temp2->right = temp1->right;
-                // temp1->left = temp3->left;
-                // temp1->right = temp3->right;
                 if(temp2->left != NULL)
                     (temp2->left)->previous = temp2;
                 if(temp2->right != NULL)
                     (temp2->right)->previous = temp2;
-                // temp1->previous = temp2;
             }
             else if(temp1->right == temp2)
             {
                 temp2->right = NULL;
                 temp2->left = temp1->left;
-                // temp1->right = temp3->right;
-                // temp1->left = temp3->left;
                 if(temp2->left != NULL)
                     (temp2->left)->previous = temp2;
                 if(temp2->right != NULL)
                     (temp2->right)->previous = temp2;
-                // temp1->previous = temp2;
             }
             else
             {
