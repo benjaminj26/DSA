@@ -268,54 +268,27 @@ void delete_node(struct node **root, int number)
             temp3->left = temp2->left;
             temp3->right = temp2->right;
             temp3->previous = temp2->previous;
-            if(temp1->left == temp2)
+            temp2->left = temp1->left;
+            temp2->right = temp1->right;
+            temp1->left = NULL;
+            temp1->right = NULL;
+            if((temp2->previous)->left == temp2)
             {
-                temp2->left = temp1;
-                temp2->right = temp1->right;
-                temp1->left = temp3->left;
-                temp1->right = temp3->right;
-                if(temp2->left != NULL)
-                    (temp2->left)->previous = temp2;
-                if(temp2->right != NULL)
-                    (temp2->right)->previous = temp2;
-                temp1->previous = temp2;
-            }
-            else if(temp1->right == temp2)
-            {
-                temp2->right = temp1;
-                temp2->left = temp1->left;
-                temp1->right = temp3->right;
-                temp1->left = temp3->left;
-                if(temp2->left != NULL)
-                    (temp2->left)->previous = temp2;
-                if(temp2->right != NULL)
-                    (temp2->right)->previous = temp2;
-                temp1->previous = temp2;
+                (temp2->previous)->left = temp1;
             }
             else
             {
-                temp2->left = temp1->left;
-                temp2->right = temp1->right;
-                temp1->left = NULL;
-                temp1->right = NULL;
-                if((temp2->previous)->left == temp2)
-                {
-                    (temp2->previous)->left = temp1;
-                }
-                else
-                {
-                    (temp2->previous)->right = temp1;
-                }
-                if(temp2->left != NULL)
-                    (temp2->left)->previous = temp2;
-                if(temp2->right != NULL)
-                    (temp2->right)->previous = temp2;
-                temp1->previous = temp2->previous;
-                if((temp1->previous)->left == temp1)
-                    (temp1->previous)->left = NULL;
-                else
-                    (temp1->previous)->right = NULL;
+                (temp2->previous)->right = temp1;
             }
+            if(temp2->left != NULL)
+                (temp2->left)->previous = temp2;
+            if(temp2->right != NULL)
+                (temp2->right)->previous = temp2;
+            temp1->previous = temp2->previous;
+            if((temp1->previous)->left == temp1)
+                (temp1->previous)->left = NULL;
+            else
+                (temp1->previous)->right = NULL;
             temp2->previous = NULL;
             *root = temp2;
             free(temp1);
