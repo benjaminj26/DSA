@@ -209,7 +209,6 @@ void delete_node(struct node **root, int number)
         return;
     }
     struct node *temp2 = get_largest_element(temp1->left, NULL);
-    struct node *trash = NULL;
     if(temp2 == NULL)
         temp2 = get_smallest_element(temp1->right, NULL);
     if(temp2 == NULL)
