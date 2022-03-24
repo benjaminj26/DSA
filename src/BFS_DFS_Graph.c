@@ -1,7 +1,3 @@
-/*
-    C-Program to implement BFS and DFS for Graph Data Structure
-*/
-
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
