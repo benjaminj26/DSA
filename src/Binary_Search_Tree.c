@@ -298,7 +298,8 @@ int main()
             "1.Insert\n"
             "2.Delete\n"
             "3.Display\n"
-            "4.Exit\nEnter your choice: "
+            "4.Exit\n"
+            "Enter your choice: "
         );
         scanf("%d", &choice);
         switch (choice) 
