@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//Node structure for doubly linked list
 struct node
 {
     int data;
@@ -9,6 +10,8 @@ struct node
     struct node *previous;
 };
 
+//Creating a new node
+//Returns a pointer to the newly created node
 struct node* create_node(int num)
 {
     struct node *new_node = (struct node *)malloc(sizeof(struct node));
@@ -19,8 +22,11 @@ struct node* create_node(int num)
     return new_node;
 }
 
+//Inserting the newly created node into the tree list
 void insert_node(struct node **root, struct node *current, int number)
 {
+    //If the location is not occupied 
+    //Insert the new node into the location
     if(*root == NULL)
     {
         struct node *new_node = create_node(number);
@@ -42,6 +48,8 @@ void insert_node(struct node **root, struct node *current, int number)
     }
 }
 
+//Function to find the location of an element
+//Returns the address of the node with the specified value
 struct node* get_location(struct node *root, int number)
 {
     if(root == NULL)
@@ -63,6 +71,8 @@ struct node* get_location(struct node *root, int number)
     return root;
 }
 
+//Function to find the largest element in the subtree
+//Returns the address of the node with the largest element
 struct node* get_largest_element(struct node *root, struct node *largest)
 {
     if(root == NULL)
@@ -82,6 +92,8 @@ struct node* get_largest_element(struct node *root, struct node *largest)
     return largest;
 }
 
+//Function to find the smallest element in the subtree
+//Returns the address of the node with the smallest element
 struct node* get_smallest_element(struct node *root, struct node *smallest)
 {
     if(root == NULL)
@@ -101,12 +113,16 @@ struct node* get_smallest_element(struct node *root, struct node *smallest)
     return smallest;
 }
 
+//Function to swap two elements in the list
 void replacer(struct node *temp1, struct node *temp2)
 {
+    //Node which is used to store the values of one of the nodes to be swapped
     struct node *temp3 = create_node(temp1->data);
     temp3->left = temp2->left;
     temp3->right = temp2->right;
     temp3->previous = temp2->previous;
+
+    //If the second node  is the left child of the first node
     if(temp1->left == temp2)
     {
         temp2->left = temp1;
@@ -119,6 +135,7 @@ void replacer(struct node *temp1, struct node *temp2)
             (temp1->left)->previous = temp1;
         if(temp1->right != NULL)
             (temp1->right)->previous = temp1;
+        //Changing the previous elements of the nodes
         if(temp1->previous != NULL)
         {
             if((temp1->previous)->left == temp1)
@@ -133,6 +150,8 @@ void replacer(struct node *temp1, struct node *temp2)
         temp2->previous = temp1->previous;
         temp1->previous = temp2;
     }
+
+    //If the second node is the right child of the first node
     else if(temp1->right == temp2)
     {
         temp2->right = temp1;
@@ -145,6 +164,7 @@ void replacer(struct node *temp1, struct node *temp2)
             (temp1->left)->previous = temp1;
         if(temp1->right != NULL)
             (temp1->right)->previous = temp1;
+        //Changing the previous elements of the nodes
         if(temp1->previous != NULL)
         {
             if((temp1->previous)->left == temp1)
@@ -197,20 +217,31 @@ void replacer(struct node *temp1, struct node *temp2)
         temp2->previous = temp1->previous;
         temp1->previous = temp3->previous;
     }
+    //Free the node used to swap the values
     free(temp3);
 }
 
+//Function to delete a specified node
 void delete_node(struct node **root, int number)
 {
+    //Finding the location of the element specified by the user
     struct node *temp1 = get_location(*root, number);
     if(temp1 == NULL)
     {
         printf("\nElement not found\n");
         return;
     }
+    //Find the largest element in the left subtree of the element to be deleted
+    //This element will replace the element to be deleted
     struct node *temp2 = get_largest_element(temp1->left, NULL);
+    //If the left subtree is epty
     if(temp2 == NULL)
+    {
+        //Find the smallest element in the right subtree of the element to be deleted
         temp2 = get_smallest_element(temp1->right, NULL);
+    }
+    
+    //If the element to be deleted is a leaf node
     if(temp2 == NULL)
     {
         if(temp1->previous != NULL)
@@ -224,14 +255,18 @@ void delete_node(struct node **root, int number)
                 (temp1->previous)->right = NULL;
             }
         }
+        //If the element to be deleted is the root element
         if(*root == temp1)
         {
             *root = NULL;
         }
+        //Free the memory that was occupied by the deleted element
         free(temp1);
     }
+    //If the node to replace the node to be deleted is a leaf node 
     else if(temp2->left == NULL && temp2->right == NULL)
     {
+        //Replace the element to be deleted with the subnode
         replacer(temp1, temp2);
         if((temp1->previous)->left == temp1)
         {
@@ -241,14 +276,20 @@ void delete_node(struct node **root, int number)
         {
             (temp1->previous)->right = NULL;
         }
+        //If the element to be deleted is the root node
         if(*root == temp1)
         {
             *root = temp2;
         }
+        //Free the memory that was occupied by the deleted element
         free(temp1);
     }
+    
+    //If the node to replace the node to be deleted is not a leaf node
     else 
     {
+        //Move the node to replace the node to be deleted 
+        //to the end of the list so that it becomes a leaf node
         while(temp2->left != NULL || temp2->right != NULL)
         {
             struct node *new_temp1 = get_largest_element(temp2->left, NULL);
@@ -256,6 +297,8 @@ void delete_node(struct node **root, int number)
                 new_temp1 = get_smallest_element(temp2->right, NULL);
             replacer(temp2, new_temp1);
         }
+
+        //Replace the node to be deleted
         replacer(temp1, temp2);
         if((temp1->previous)->left == temp1)
         {
@@ -265,14 +308,18 @@ void delete_node(struct node **root, int number)
         {
             (temp1->previous)->right = NULL;
         }
+
+        //If the node to be deleted is the root node
         if(*root == temp1)
         {
             *root = temp2;
         }
+        //Free the memory occupied by the deleted node
         free(temp1);
     }
 }
 
+//Function to display the entire tree
 void display_tree(struct node *root)
 {
     if(root == NULL)
@@ -287,10 +334,12 @@ void display_tree(struct node *root)
     }
 }
 
+//Main function
 int main()
 {
     struct node *root = NULL;
     int choice, number;
+    //Start of the menu
     do
     {
         printf
@@ -304,12 +353,14 @@ int main()
         scanf("%d", &choice);
         switch (choice) 
         {
+            //Inserting a new element
             case 1:
                 printf("\nEnter the number: ");
                 scanf("%d", &number);
                 insert_node(&root, NULL, number);
                 break;
             
+            //Deleting an element
             case 2:
                 if(root == NULL)
                 {
@@ -329,6 +380,7 @@ int main()
                 }
                 break;
 
+            //Display the tree
             case 3:
                 if(root == NULL)
                 {
@@ -340,6 +392,7 @@ int main()
                     printf("\n");
                 }
                 break;
+            //Exit the program
             case 4:
                 exit(0);
             default:
