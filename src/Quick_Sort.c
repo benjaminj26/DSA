@@ -7,24 +7,46 @@ int partition(int array[], int low, int upp)
     int pivot = array[low];
     while(start < end)
     {
-        while(array[start] <= pivot)
+        while(start <= upp && array[start] <= pivot)
         {
             start++;
         }
         
-        while (array[end] > pivot) 
+        while (end >= low && array[end] > pivot) 
         {
             end--;    
         }
 
-        int tmp = array[start];
-        array[start] = array[end];
+        if(start > upp)
+        {
+            start = upp;
+        }
+
+        if(end < low)
+        {
+            end = low;
+        }
+
+        if(start < end)
+        {
+            int tmp = array[start];
+            array[start] = array[end];
+            array[end] = tmp;
+        }
+    }
+    if(start == end && array[end] <= pivot)
+    {
+        int tmp = array[low];
+        array[low] = array[end];
         array[end] = tmp;
     }
     
-    int tmp = array[low];
-    array[low] = array[end];
-    array[end] = tmp;
+    else if(start > end)
+    {
+        int tmp = array[low];
+        array[low] = array[end];
+        array[end] = tmp;
+    }
 
     return end;
 }
