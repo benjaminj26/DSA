@@ -25,7 +25,9 @@ void enqueue(int *queue, int element)
 int dequeue(int *queue)
 {
     if(front > rear || (front == -1 && rear == -1))
+    {
         return 0;
+    }
     else
     {
         return queue[front++];
@@ -34,36 +36,39 @@ int dequeue(int *queue)
 
 void bfs(int *queue, int *visited)
 {
-    int index;
-    int number = dequeue(queue);
-    if(number == 0)
-        return;
-    else
+    while(1)
     {
-        printf("%d ", number);
-        for(int i=0; i<size; ++i)
+        int index;
+        int number = dequeue(queue);
+        if(number != 0)
         {
-            if(array[i] == number)
+            printf("%d ", number);
+            for(int i=0; i<size; ++i)
             {
-                index = i;
+                if(array[i] == number)
+                {
+                    index = i;
+                    break;
+                }
             }
-        }
-        for(int i=0; i<size; ++i)
-        {
-            if(adjacency_matrix[index][i] == 1)
+            for(int i=0; i<size; ++i)
             {
-                if(visited[i] == 0)
+                if(adjacency_matrix[index][i] == 1 && visited[i] == 0)
                 {
                     enqueue(queue, array[i]);
                     visited[i] = 1;
                 }
             }
         }
-        bfs(queue, visited);
+        else
+        {
+            return;
+        }
     }
+    printf("\n");
 }
 
-void dfs(int *stack, int *visited, int index)
+void dfs(int *visited, int index)
 {   
     printf("%d ", array[index]);
     visited[index] = 1;
@@ -74,7 +79,7 @@ void dfs(int *stack, int *visited, int index)
             if(visited[i] == 0)
             {
                 visited[i] = 1;
-                dfs(stack, visited, i);
+                dfs( visited, i);
             }
         }
     }
@@ -133,7 +138,7 @@ int main()
     print_adjacency_matrix();
     printf("\n");
     int visited[size], index, option;
-    int queue[size], stack[size];
+    int queue[size];
     do 
     {
         printf
@@ -166,7 +171,7 @@ int main()
                 printf("\nEnter the index of the root node: ");
                 scanf("%d", &index);
                 printf("The DFS traversal of the graph is:\n");
-                dfs(stack, visited, index);
+                dfs(visited, index);
                 break;
 
             case 3:
