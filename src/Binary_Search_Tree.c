@@ -25,7 +25,7 @@ struct node* create_node(int num)
 //Inserting the newly created node into the tree list
 void insert_node(struct node **root, struct node *current, int number)
 {
-    //If the location is not occupied 
+    //If the location is not occupied
     //Insert the new node into the location
     if(*root == NULL)
     {
@@ -66,7 +66,7 @@ struct node* get_location(struct node *root, int number)
     }
     else 
     {
-        root = get_location(root->right, number);    
+        root = get_location(root->right, number); 
     }
     return root;
 }
@@ -108,7 +108,7 @@ struct node* get_smallest_element(struct node *root, struct node *smallest)
     {
         smallest = root;
     }
-    smallest = get_smallest_element(root->left, smallest);   
+    smallest = get_smallest_element(root->left, smallest);
     smallest = get_smallest_element(root->right, smallest);
     return smallest;
 }
@@ -196,7 +196,7 @@ void replacer(struct node *temp1, struct node *temp2)
 
         //Changing the previous elements of the nodes
         if(temp1->previous != NULL)
-        {    
+        {
             if((temp1->previous)->left == temp1)
             {
                 (temp1->previous)->left = temp2;
@@ -240,17 +240,17 @@ void delete_node(struct node **root, int number)
         //Find the smallest element in the right subtree of the element to be deleted
         temp2 = get_smallest_element(temp1->right, NULL);
     }
-    
+
     //If the element to be deleted is a leaf node
     if(temp2 == NULL)
     {
         if(temp1->previous != NULL)
-        {    
+        {
             if((temp1->previous)->left == temp1)
             {
                 (temp1->previous)->left = NULL;
             }
-            else 
+            else
             {
                 (temp1->previous)->right = NULL;
             }
@@ -263,7 +263,7 @@ void delete_node(struct node **root, int number)
         //Free the memory that was occupied by the deleted element
         free(temp1);
     }
-    //If the node to replace the node to be deleted is a leaf node 
+    //If the node to replace the node to be deleted is a leaf node
     else if(temp2->left == NULL && temp2->right == NULL)
     {
         //Replace the element to be deleted with the subnode
@@ -272,7 +272,7 @@ void delete_node(struct node **root, int number)
         {
             (temp1->previous)->left = NULL;
         }
-        else 
+        else
         {
             (temp1->previous)->right = NULL;
         }
@@ -284,11 +284,11 @@ void delete_node(struct node **root, int number)
         //Free the memory that was occupied by the deleted element
         free(temp1);
     }
-    
+
     //If the node to replace the node to be deleted is not a leaf node
-    else 
+    else
     {
-        //Move the node to replace the node to be deleted 
+        //Move the node to replace the node to be deleted
         //to the end of the list so that it becomes a leaf node
         while(temp2->left != NULL || temp2->right != NULL)
         {
@@ -304,7 +304,7 @@ void delete_node(struct node **root, int number)
         {
             (temp1->previous)->left = NULL;
         }
-        else 
+        else
         {
             (temp1->previous)->right = NULL;
         }
@@ -351,7 +351,7 @@ int main()
             "Enter your choice: "
         );
         scanf("%d", &choice);
-        switch (choice) 
+        switch (choice)
         {
             //Inserting a new element
             case 1:
@@ -359,14 +359,14 @@ int main()
                 scanf("%d", &number);
                 insert_node(&root, NULL, number);
                 break;
-            
+
             //Deleting an element
             case 2:
                 if(root == NULL)
                 {
                     printf("\nThe List is Empty\n");
                 }
-                else 
+                else
                 {
                     printf("Enter the number to be deleted: ");
                     scanf("%d", &number);
